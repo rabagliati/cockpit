@@ -53,8 +53,8 @@ def initially_loopbacked(machine):
     if machine.atomic_image:
         return False
 
-    # Debian, Ubuntu, and Fedora 26 use the overlayfs driver by default.
-    if machine.image in [ "debian-stable", "debian-testing", "ubuntu-1604", "fedora-26" ]:
+    # RHEL, Debian, Ubuntu, and Fedora 26 use the overlayfs driver by default.
+    if machine.image in [ "debian-stable", "debian-testing", "ubuntu-1604", "fedora-26", "rhel-7" ]:
         return False
 
     # The rest don't have space in the root volume group, or don't
@@ -66,7 +66,7 @@ def initially_loopbacked(machine):
 # device is added.
 #
 def initially_without_vgroup(machine):
-    return machine.image in [ "fedora-24", "rhel-7" ]
+    return machine.image in [ "fedora-24" ]
 
 @skipImage("No cockpit-docker on i386", "fedora-i386")
 class TestDockerStorage(MachineCase):
