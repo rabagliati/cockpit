@@ -1164,6 +1164,8 @@
         "gettextCatalog",
         function($q, $scope, kselect, loader, methods, projectData, projectPolicy, $location, memberActions, fields, gettextCatalog) {
             var _ = gettextCatalog.getString.bind(gettextCatalog);
+            loader.watch("Group", $scope);
+            loader.watch("Project", $scope);
 
             function getMembers() {
                 var members = [];
@@ -1298,6 +1300,7 @@
     .controller('GroupChangeCtrl', [
         '$q',
         '$scope',
+        'kubeLoader',
         'kubeSelect',
         "kubeMethods",
         'projectData',
@@ -1305,7 +1308,10 @@
         'projectPolicy',
         '$location',
         "fields",
-        function($q, $scope, kselect, methods, projectData, memberActions, projectPolicy, $location, fields) {
+        function($q, $scope, loader, kselect, methods, projectData, memberActions, projectPolicy, $location, fields) {
+            loader.watch("User", $scope);
+            loader.watch("Project", $scope);
+
             function getUsers() {
                 return kselect().kind("User");
             }
@@ -1314,7 +1320,7 @@
             }
             $scope.select = {
                 member: 'Select Member',
-                members: getUsers(),
+                getMembers: getUsers(),
             };
             angular.extend($scope, projectData);
             $scope.fields = fields;
